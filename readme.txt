@@ -3,8 +3,8 @@ Contributors: sgPlanwize
 Donate link: 
 Tags: nice, widget, login, register, password, log-in, logout, log-out, user, ajax, authentication
 Requires at least: 3.0.0
-Tested up to: 3.6.1
-Stable tag: trunk
+Tested up to: 3.9.1
+Stable tag: 1.3.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ An elegant login and register widget that can be placed in any widget area on yo
 * Can appear horizontally or vertically.
 * Ajax enabled authentication, allowing the whole process to take place on a single page instead of linking to the WordPress login page. 
 * SSL compatible to keep your website secure.
+* Nice Login Widget is now support WP-reCAPTCHA plugin.
 
 
 = Translation =
@@ -28,15 +29,18 @@ An elegant login and register widget that can be placed in any widget area on yo
 * Lithuania (lt_LT) - Justas Malinauskas
 * Arab (ar_AR) - Mehdi Bounya
 * Spanish (es_ES) - Pedro Bibiloni
-* German (de_DE) - bobo2222
+* German (de_DE) - Alexander Conca
 * Danish (da_DK) - henrik
+* Dutch (nl_NL) - Jan Hilhorst 
+* Norwegian/bokmål (no_NB) - flytende.no 
+* Slovenian / Slovenščina (sl_SI) - tanja.kosec
 
 
 If you have created your own language translation, or have an update of an existing one, you can send [gettext PO and MO](http://codex.wordpress.org/Translating_WordPress) files to `info@superplug.in` so I can bundle it into next versions.
 
 = Login Widget Pro =
 
-Login Widgets Pro will be launched soon, [check out here for details and get your discount](http://superplug.in/registration-login-widget-pro) 
+Login Widget Pro has launched!, [Check it out here](http://goo.gl/U25I8U) 
 
 
 = Author Background =
@@ -90,6 +94,34 @@ Our widget should be compatible with most other plugins associated with logging 
 
 == Changelog ==
 
+= 1.3.10 =
+* Tested on Wordpress 3.9+ 
+* WP-reCAPTCHA compatibility
+* Minor bug fixes.
+
+= 1.3.9 =
+* Widget options UI rearranged.
+* The languages main PO file has been refreshed.
+* Bug fixes and stabilities improved.
+
+= 1.3.8 =
+* Tested on Wordpress 3.8 .
+* Login shortcode css and layout improved.
+* Slovenian translation added.
+* Fix Norwegian translation files.
+
+= 1.3.7 = 
+* Norwegian translation added.
+
+= 1.3.5 =
+* Fixed a bug when using rename login.php file.
+* Dutch translation added.
+* Minor optimizations and bug fix.
+
+= 1.3.4 = 
+* Minor bug fixes.
+* Improved German translation file added. Credits to Alexander Conca.
+
 = 1.3.3 =
 * Danish translation added.
 * German translation added.
@@ -141,3 +173,7 @@ Many bugs fixed and general capabilities was added.
 = 1.3.1 =
 
 Now you can add title for every login widget
+
+= 1.3.5 =
+Use any other plugin that integrate inside login or registration form to add more fields.
+

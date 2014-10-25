@@ -81,7 +81,7 @@ class Ajax_Auth_users
 					
 				$errors = wp_signon('', $secure_cookie);
 					
-				//$redirect_to = apply_filters('login_redirect', $redirect_to, isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '', $user);
+				$redirect_to = apply_filters('login_redirect', $redirect_to, isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '', $errors);
 					
 					
 				if (is_wp_error($errors)){

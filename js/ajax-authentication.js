@@ -28,53 +28,50 @@ jQuery(document).ready(function($){
 
 			login_header.hide();
 			login_header.empty();
-			
-			var inputs = form.find('input');
-			if (inputs.length > 0){
-				var jsonObj = { };
-				var redirect_exec = false;
-				inputs.each(function(index){
-					var name = $(this).attr('name');
-					jsonObj[name] = $(this).val();
-					
-				});
-				$.post(ajax_object.ajax_url, jsonObj, function(data) {
-					
-					//nonce check
-					if (data=='-1'){
-						login_header.html("<div id='login_error'>Security test failed.</div>");
-						return;
-					}
-					
-					var JSon;
-					
-					try{
-						JSon = $.parseJSON(data);
-					}catch(e){
-						login_header.html("<div id='login_error'>An unknown error occurred while trying to connect to server.<br>Please refresh the page and try again.</div>");
-						return;
-					}
-					
-					
-					if (data=='0' || JSon.operation == 'redirect'){
-						redirect_exec = true;
-						//location.href = JSon.redirect_to;
-						location.reload(true);
-						
-					}else{
-						login_header.html(JSon.message);
-					}
-					
-					
-				}).always(function(){
-					if (!redirect_exec){
-						loadingDiv.hide();
-						login_header.slideDown(100);
-						mainDiv.children("div:not('.sp-loading-img')").css('opacity', '1');
-					}
-				});
+			var serializedForm = form.serialize();
+			var redirect_exec = false;
+
+			$.post(ajax_object.ajax_url, serializedForm, function(data) {
 				
-			}
+				//nonce check
+				if (data=='-1'){
+					login_header.html("<div id='login_error'>"+pwLogWi_messages.ajax_request_fails+"</div>");
+					return;
+				}
+				
+				var JSon;
+				
+				try{
+					JSon = $.parseJSON(data);
+				}catch(e){
+					if (typeof data == 'string'){
+						login_header.html("<div id='login_error'>"+data+"</div>");
+					}else{
+						login_header.html("<div id='login_error'>"+pwLogWi_messages.ajax_unknown_error+"</div>");
+					}
+					return;
+				}
+				
+				
+				if (data=='0' || JSon.operation == 'redirect'){
+					redirect_exec = true;
+					//location.href = JSon.redirect_to;
+					location.reload(true);
+					
+				}else{
+					login_header.html(JSon.message);
+				}
+				
+				
+			}).always(function(){
+				if (!redirect_exec){
+					loadingDiv.hide();
+					login_header.slideDown(100);
+					mainDiv.children("div:not('.sp-loading-img')").css('opacity', '1');
+				}
+			});
+				
+			
 			return false;
 			
 		});
