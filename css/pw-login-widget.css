@@ -1,6 +1,4 @@
 @CHARSET "windows-1255";
-
-
 .sp_main_content{
 
 	display: inline-block;
@@ -12,7 +10,7 @@
 .sp_aside{
 	
 	display: inline-block;
-	width: 25%%;
+	width: 25%;
 	min-width: 300px;
 	float: right;
 	margin-right: 25px;
@@ -24,7 +22,8 @@
 
 .sp-error, #login_error{
 	margin: 3px;
-	color: rgb(214, 81, 81);
+	/*color: rgb(214, 81, 81);*/
+        color:red;
 }
 
 .sp-message{
@@ -84,24 +83,27 @@
 
 div.sp-main-div{
 	position: relative;
-	margin: 5px;
+	/*margin: 5px;*/
 	
 }
-
+div.sp-main-div input
+{
+    border-radius: 3px;
+}
 div.sp-main-div p{
 	margin-top: 0;
 	margin-bottom: 0.5em;
-	max-width: 220px;
+	/* max-width: 220px;*/
 }
-
 .sp-main-div-horizontal form p{
 	display:inline-block;
 	margin: 0 5px 0 2px;
 }
 
 .sp-main-div-vertical {
-	max-width: 300px;
-	min-height: 250px;
+	max-width: 100%;
+	min-height: 170px;
+        padding-right:5px;
 }
 
 .sp-main-div-vertical form p{
@@ -109,10 +111,67 @@ div.sp-main-div p{
 }
 
 
-div.sp-main-div li{
+div.sp-main-div li
+{
 	display: inline-block;
-	margin-right: 4px;
+	margin-right: 7px;
 }
-
-
-
+#rememberme1
+{
+    border:1px solid #D7D2D2;
+}
+.sp-widget-login-div  input[type="submit"]
+{
+  /*  background:#217dea!important;
+    height: 40px;
+    width: 110px;
+    border-radius:0px;
+    color:blue;
+    font-weight:bold;*/
+ /* background: -moz-linear-gradient(center top , #358EEA 0%, #2170CD 100%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(center top , #358EEA 0%, #2170CD 100%) repeat scroll 0 0 transparent;*/
+  background-image:url("../images/login_bg_img.png");
+     color: #FFFFFF;
+     height: 35px;
+    width: 100px;
+    box-shadow: none;
+    border: none;
+    font-size: 14px;
+}
+.sp-widget-login-div  input[type="submit"]:hover
+{
+  /*background: -moz-linear-gradient(center top , #6CB6F3 0%, #4387D2 100%) repeat scroll 0 0 transparent;*/
+   color: #FFFFFF;
+}
+#itroi_passwordLink
+{
+/*background: none repeat scroll 0 0 ;*/
+    background:rgb(245,245,245);
+    border: 1px solid #C2C2C2;
+    border-radius: 3px 3px 3px 3px;
+    /*color: #333333;*/
+    color:#003366;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 9px;
+    min-width: 75px;
+    padding: 6px;
+    height:40px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+#itroi_passwordLink:hover
+{
+    /*background: -moz-linear-gradient(center top , #FEFEFE 0%, #E8E8E8 100%) repeat scroll 0 0 transparent;*/
+    background:rgb(232,232,232);
+    color: #555555;
+}
+#server_validate_errore
+{
+    background: none repeat scroll 0 0 #D9EEFF;
+    border: 1px solid #AEDAFF;
+    border-radius: 5px 5px 5px 5px;
+    color: black;
+    padding: 5px;
+}

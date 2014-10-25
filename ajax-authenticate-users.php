@@ -1,7 +1,4 @@
 <?php
-
-
-
 class Ajax_Auth_users
 {
 	
@@ -47,7 +44,7 @@ class Ajax_Auth_users
 				if ( $http_post ) {
 					$errors = self::retrieve_password();
 					if ( !is_wp_error($errors) ) {
-						return array('operation' => 'message' , 'message' => "<p class='sp-message'>".__('Check your e-mail for the confirmation link.', 'pwLogWi')."</p>");
+						return array('operation' => 'message' , 'message' => "<p class='sp-message'>".__('<div id="server_validate_errore">You can request your password by providing your User Name and the Password will be sent to the email address you provided during registration.</div>', 'pwLogWi')."</p>");
 					}else{
 	
 						do_action('lost_password');
@@ -89,7 +86,7 @@ class Ajax_Auth_users
 					if (array_key_exists('incorrect_password', $errors->errors) || array_key_exists('invalid_username', $errors->errors)){
 						unset($errors->errors['incorrect_password']);
 						unset($errors->errors['invalid_username']);
-						$errors->add('authentication_failed', __('<strong>ERROR</strong>: Invalid username or incorrect password.', 'pwLogWi'));
+						$errors->add('authentication_failed', __('Invalid username or incorrect password.', 'pwLogWi'));
 					}
 					
 					return array('operation' => 'message' , 'message' => self::login_header('', '', $errors) );
@@ -121,22 +118,22 @@ class Ajax_Auth_users
 	
 		// Check the username
 		if ( $sanitized_user_login == '' ) {
-			$errors->add( 'empty_username', __( '<strong>ERROR</strong>: Please enter a username.' ) );
+			$errors->add( 'empty_username', __( 'Please enter a username.' ) );
 		} elseif ( ! validate_username( $user_login ) ) {
-			$errors->add( 'invalid_username', __( '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.' ) );
+			$errors->add( 'invalid_username', __( 'This username is invalid because it uses illegal characters. Please enter a valid username.' ) );
 			$sanitized_user_login = '';
 		} elseif ( username_exists( $sanitized_user_login ) ) {
-			$errors->add( 'username_exists', __( '<strong>ERROR</strong>: This username is already registered. Please choose another one.' ) );
+			$errors->add( 'username_exists', __( 'This username is already registered. Please choose another one.' ) );
 		}
 	
 		// Check the e-mail address
 		if ( $user_email == '' ) {
-			$errors->add( 'empty_email', __( '<strong>ERROR</strong>: Please type your e-mail address.' ) );
+			$errors->add( 'empty_email', __( 'Please type your e-mail address.' ) );
 		} elseif ( ! is_email( $user_email ) ) {
-			$errors->add( 'invalid_email', __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.' ) );
+			$errors->add( 'invalid_email', __( 'The email address isn&#8217;t correct.' ) );
 			$user_email = '';
 		} elseif ( email_exists( $user_email ) ) {
-			$errors->add( 'email_exists', __( '<strong>ERROR</strong>: This email is already registered, please choose another one.' ) );
+			$errors->add( 'email_exists', __( 'This email is already registered, please choose another one.' ) );
 		}
 	
 		do_action( 'register_post', $sanitized_user_login, $user_email, $errors );
@@ -149,7 +146,7 @@ class Ajax_Auth_users
 		$user_pass = wp_generate_password( 12, false);
 		$user_id = wp_create_user( $sanitized_user_login, $user_pass, $user_email );
 		if ( ! $user_id ) {
-			$errors->add( 'registerfail', sprintf( __( '<strong>ERROR</strong>: Couldn&#8217;t register you... please contact the <a href="mailto:%s">webmaster</a> !' ), get_option( 'admin_email' ) ) );
+			$errors->add( 'registerfail', sprintf( __( 'Couldn&#8217;t register you... please contact the <a href="mailto:%s">webmaster</a> !' ), get_option( 'admin_email' ) ) );
 			return $errors;
 		}
 	
@@ -173,11 +170,11 @@ class Ajax_Auth_users
 		$errors = new WP_Error();
 	
 		if ( empty( $_POST['user_login'] ) ) {
-			$errors->add('empty_username', __('<strong>ERROR</strong>: Enter a username or e-mail address.'));
+			$errors->add('empty_username', __('Enter a username or e-mail address.'));
 		} else if ( strpos( $_POST['user_login'], '@' ) ) {
 			$user_data = get_user_by( 'email', trim( $_POST['user_login'] ) );
 			if ( empty( $user_data ) )
-				$errors->add('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.'));
+				$errors->add('invalid_email', __("<div id='server_validate_errore'>".'You can request your password by providing your User Name and the Password will be sent to the email address you provided during registration.'."</div>"));
 		} else {
 			$login = trim($_POST['user_login']);
 			$user_data = get_user_by('login', $login);
@@ -189,7 +186,7 @@ class Ajax_Auth_users
 			return $errors;
 	
 		if ( !$user_data ) {
-			$errors->add('invalidcombo', __('<strong>ERROR</strong>: Invalid username or e-mail.'));
+			$errors->add('invalidcombo', __('Invalid username or e-mail.'));
 			return $errors;
 		}
 	
@@ -235,7 +232,7 @@ class Ajax_Auth_users
 		$message = apply_filters('retrieve_password_message', $message, $key);
 	
 		if ( $message && !wp_mail($user_email, $title, $message) )
-			wp_die( __('The e-mail could not be sent.') . "<br />\n" . __('Possible reason: your host may have disabled the mail() function...') );
+			wp_die( __('The e-mail could not be sent.') . "<br />\n" . __('your host may have disabled the mail() function...') );
 	
 		return true;
 	}

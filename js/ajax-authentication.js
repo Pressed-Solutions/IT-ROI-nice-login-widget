@@ -1,6 +1,5 @@
-jQuery(document).ready(function($){
-	
-
+jQuery(document).ready(function($)
+{
 	$(".widget_pw_login_widget").on("click", "input[type='submit']", function(){
 		
 			
@@ -42,7 +41,7 @@ jQuery(document).ready(function($){
 					
 					//nonce check
 					if (data=='-1'){
-						login_header.html("<div id='login_error'>Security test failed.</div>");
+						login_header.html("<div id='login_error'>Invalid username or email</div>");
 						return;
 					}
 					
@@ -51,7 +50,7 @@ jQuery(document).ready(function($){
 					try{
 						JSon = $.parseJSON(data);
 					}catch(e){
-						login_header.html("<div id='login_error'>An unknown error occurred while trying to connect to server.<br>Please refresh the page and try again.</div>");
+						login_header.html("<div id='server_validate_errore' style='margin-bottom: 27px;'>You can request your password by providing your User Name and the Password will be sent to the email address you provided during registration.</div>");
 						return;
 					}
 					
@@ -78,5 +77,4 @@ jQuery(document).ready(function($){
 			return false;
 			
 		});
-
 });

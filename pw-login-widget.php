@@ -334,7 +334,8 @@ class Pw_Login_Widget extends WP_Widget
 						$return_text = str_replace("{".$match."}", $user_data["user_email"], $return_text);
 						break;
 					case "logout_link":
-						$return_text = str_replace("{".$match."}", "<a href='".wp_logout_url($redirect_url)."'>". __('Log-Out', 'pwLogWi') ."</a>", $return_text);
+                                            
+					$return_text = str_replace("{".$match."}", "<a href='".wp_logout_url()."'>". __('Log-Out', 'pwLogWi') ."</a>", $return_text);
 						break;
 					case "profile_link":
 						$return_text = str_replace("{".$match."}", "<a href='".admin_url("profile.php")."'>". __('Profile', 'pwLogWi') ."</a>", $return_text);
@@ -396,17 +397,38 @@ class Pw_Login_Widget extends WP_Widget
 				if ( isset( $instance['logged_in_text'] ) && !empty( $instance['logged_in_text'] ) ) {
 					$logged_in_text = self::interapt_merge_tags($instance['logged_in_text'], $_SERVER['REQUEST_URI']);
 				}else{
-					$logged_in_text = self::interapt_merge_tags(__("Welcome Back ", "pwLogWi") . "{user_login}. {logout_link}" , $_SERVER['REQUEST_URI']);
+                                    
+					$logged_in_text = self::interapt_merge_tags(__("<span style='padding:9px;'>Welcome</span>", "pwLogWi") . "{user_login}. {logout_link}" , $_SERVER['REQUEST_URI']);
 				}
 				
 				echo $logged_in_text;
 				
 			}else{
+                                       
 					$is_user_can_register = $this->check_user_can_register();
 					$ajax_nonce = wp_create_nonce("sp-security-nonce");
 					//wp_clear_auth_cookie();
 					?>
-					<div id="<?php echo "sp-main-div-".$this->id; ?>" class="sp-main-div <?php echo $main_div_class?>" >
+
+                        <script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery('.fancybox').fancybox();
+		});
+	</script>
+	<style type="text/css">
+		.fancybox-custom .fancybox-skin {
+			box-shadow: 0 0 50px #222;
+                        background: red;
+		}
+
+		
+	</style>
+	<ul>
+		
+		
+		
+	</ul>
+        <div id="<?php echo "sp-main-div-".$this->id; ?>" class="sp-main-div <?php echo $main_div_class?>" >
 					<div class="sp-login-header">
 					<?php if (force_ssl_login()) : 
 						if ( 0 === strpos($_SERVER['REQUEST_URI'], 'http') ) {
@@ -418,17 +440,56 @@ class Pw_Login_Widget extends WP_Widget
 						<div class="sp-ssl-requires-msg sp-error" style="display:none"><?php _e(sprintf("Login to this site requires ssl communication.<br>Click <a href='%s'>here</a> to reload the page over ssl.", $redirect), "pwLogWi")?></div>
 					<?php endif;?>
 					</div>
-					<div class='sp-widget-login-div' <?php echo $hide_login_div; ?>>
-					<form method="post" action="<?php bloginfo('url') ?>/wp-login.php" class="wp-user-form">
-					<p><label for='user_login'><?php _e('Username: ', 'pwLogWi') ?></label></p>
-					<p ><input id='user_login' type='text' name='log' required='required' /></p>
-					<p ><label for='user_pass'><?php _e('Password: ', 'pwLogWi') ?></label></p>
-					<p ><input id='user_pass' type='password' name='pwd' required='required' /></p>
-					<?php if ($include_remember_me){?>
-					<p ><label for='rememberme1' ><input type='checkbox' name='rememberme' value='forever' <?php if ($instance['remember_me_def']=='check_by_default') echo "checked='checked'"; ?> id='rememberme1' /> <?php _e(' Remember me', 'pwLogWi') ?></label></p>
+                                            <script>
+jQuery(document).ready(function() 
+{
+	// validate the comment form when it is submitted
+		// validate signup form on keyup and submit
+	jQuery("#login").validate({
+		rules: {
+			log: "required",
+                        pwd: "required",
+                        log: 
+                        {
+				required: true
+				
+			},
+                        pwd:
+                        {
+                             required: true
+				
+                        }
+                        
+                       },
+		messages: 
+                    {
+			log: "Please enter user name",
+                        pwd: "please enter password"
+                    }
+	});
+         jQuery(".register").click(function() 
+            {
+               // jQuery("#fancybox-loading").hide();
+            });
+
+});
+
+</script>
+                                        <div style=""><?php  checkuserrole();   ?></div> 
+                                        <div class='sp-widget-login-div' <?php echo $hide_login_div; ?>>
+                                                    
+					<form method="post" action="<?php bloginfo('url') ?>/wp-login.php" class="wp-user-form" style="min-height:140px;" id="login" onsubmit="return validateForm()">
+					<span style="float:left;height:35px;color:#666666;padding-top: 5px;"><label for='user_login'><?php _e('Username: ', 'pwLogWi') ?></label></span>
+                                        
+					<span style="float:right;"><input id='user_login' type='text' name='log' required='required' style="width:240px;" autocomplete="off" /></span>
+                                        <div style="clear:both;"></div>
+					<span style="float:left;height:35px;color:#666666;padding-top: 15px;"><label for='user_pass'><?php _e('Password: ', 'pwLogWi') ?></label></span>
+					<span style="float:right;margin-top:10px;"><input id='user_pass' type='password' name='pwd' required='required' style="width:240px;" autocomplete="off" /></span>
+					<span style="float:left;margin-top: 0.5em;"><input type="submit" name="user-submit" value="<?php  _e('Login', 'pwLogWi')?>" /></span>
+                                        <?php if ($include_remember_me){?>
+					<span  style="float:right;width:200px;padding-top: 10px;"><label for='rememberme1' ><input type='checkbox' name='rememberme' value='forever' <?php if ($instance['remember_me_def']=='check_by_default') echo "checked='checked'"; ?> id='rememberme1' /> <?php _e(' Remember me', 'pwLogWi') ?></label></span>
 					<?php }?>
-					<p ><input type="submit" name="user-submit" value="<?php _e('Login', 'pwLogWi')?>" /></p>
-					<?php do_action('login_form'); ?>
+					<?php // do_action('login_form'); ?>
 					<p>
 					<input type="hidden" name="action" value="login">
 					<input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
@@ -437,21 +498,49 @@ class Pw_Login_Widget extends WP_Widget
 					<input type="hidden" name="security" value="<?php echo $ajax_nonce?>"/>
 					</p>
 					</form>
-					<ul>
+                                                    <div style="clear:both;"></div>
+                                                    
+					<ul style="margin-top:10px;">
 					<?php if ($is_user_can_register) :?>
 						<li><a class="sp-flipping-link" href='<?php echo is_multisite() ? network_site_url('wp-signup.php') : '#sp-register' ; ?>'><?php _e('Don\'t have an account?', 'pwLogWi') ?></a></li>
 					<?php  endif; ?>
-					<li><a class="sp-flipping-link" href='#lost-pass' ><?php _e('Lost your password?', 'pwLogWi') ?></a></li>
+                                           <?php 
+                                           function registerurl()
+                                        {   
+                                       $query1="select * from wp_posts where post_type='page' and post_name='registration'";
+                                       $result1 =  mysql_query($query1);
+                                       while($w1 =  mysql_fetch_array($result1))
+                                       {
+                                          $register1=$w1['guid'];
+                                       } 
+                                       return $register1;
+                                       }
+                                       function forgetpassrurl()
+                                        {   
+                                       $query1="select * from wp_posts where post_type='page' and post_name='forget-password'";
+                                       $result1 =  mysql_query($query1);
+                                       while($w1 =  mysql_fetch_array($result1))
+                                       {
+                                          $forgetpass=$w1['guid'];
+                                       } 
+                                       return $forgetpass;
+                                       }
+                                       // dnn_ctr1170_Login_Login_DNN_passwordLink
+                                       // dnn_ctr1170_Login_Login_DNN_passwordLink
+                                       ?> 
+                                    <?php /*    <li><a class="fancybox fancybox.ajax" href="<?php echo registerurl();  ?>">Ajax</a></li> */ ?>
+					<li><a  id="itroi_passwordLink" class="fancybox register fancybox.ajax" href='<?php echo registerurl();  ?>' ><?php _e('Register', 'pwLogWi') ?></a></li>
+                                        <li><a   style="" id="itroi_passwordLink" class="sp-flipping-link" href='#lost-pass' ><?php _e('Retrieve Password', 'pwLogWi') ?></a></li>
 					</ul>
-					
+                                           
 					</div>
 					
 					<?php if ($is_user_can_register){?>
 					<div class='sp-widget-register-div' <?php echo $hide_register_div; ?>>
-				
+			
 					<form method="post" action="<?php echo site_url('wp-login.php?action=register', 'login_post') ?>" class="wp-user-form">
 					<p ><label for='user_login'><?php _e('Choose username: ', 'pwLogWi') ?></label></p>
-					<p ><input id='user_login' type='text' name='user_login' required='required' /></p>
+					<p ><input id='user_login' type='text' name='user_login'  required='required' /></p>
 					<p ><label for="user_email" ><?php _e('Your Email: ', 'pwLogWi') ?></label></p>
 					<p ><input id="user_email" type="email" name="user_email" required="required" /></p>
 					<p ><input type="submit" name="user-submit" value="Sign up!" /></p>
@@ -466,14 +555,37 @@ class Pw_Login_Widget extends WP_Widget
 					<ul><li><a class="sp-flipping-link" href='#sp-login'><?php _e('Have an account?', 'pwLogWi') ?></a></li></ul>
 					</div>
 					<?php }?>
-					
+                                            <script type="text/javascript" src="<?php bloginfo("template_directory"); ?>/js/jquery.validate.js"></script>
+					 <script>
+jQuery(document).ready(function() 
+{
+	// validate the comment form when it is submitted
+		// validate signup form on keyup and submit
+	jQuery("#lostpass").validate({
+		rules: {
+			user_login: "required",
+                        user_login: 
+                        {
+				required: true
+				
+			}
+                       },
+		messages: 
+                    {
+			user_login: "Please enter your user name or email id"
+                    }
+	});
+        
+
+});
+</script>				
 					<div class='sp-widget-lost_pass-div' style='display:none;'>
 			
-					<form method="post" action='<?php echo site_url('wp-login.php?action=lostpassword', 'login_post'); ?>'>
-					<p ><label for='user_login'><?php _e('Enter your username or email: ', 'pwLogWi') ?></label></p>
-					<p ><input type="text" name="user_login" value="" size="20" id="user_login" /></p>
+					<form method="post" action='<?php echo site_url('wp-login.php?action=lostpassword', 'login_post'); ?>' id="lostpass">
+					<span><label for='user_login'><?php _e('Enter your username or email: ', 'pwLogWi') ?></label></span>
+					<p><input type="text" name="user_login" value="" size="20" id="user_login" required="required" /></p>
 					<?php do_action('login_form', 'resetpass')?>
-					<p><input type="submit" name="user-submit" value="<?php _e('Reset my password', 'pwLogWi') ?>"  /></p>
+					<p><input type="submit" name="user-submit"  id="itroi_passwordLink" value="<?php _e('Retrieve Password', 'pwLogWi') ?>"  /></p>
 					<p>
 					<input type="hidden" name="action" value="lostpassword">
 					<input type="hidden" name="redirect_to" value="<?php echo empty($_GET)? $_SERVER['REQUEST_URI']."?reset=true" : $_SERVER['REQUEST_URI']."&reset=true"; ?>" />
